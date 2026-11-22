@@ -5,6 +5,12 @@ export const metadata: Metadata = {
   description:
     "Read the ToolHub Terms of Service. By using our free online tools, you agree to these terms.",
   alternates: { canonical: "https://toolhub.org.in/terms-of-service" },
+  openGraph: {
+    url: "https://toolhub.org.in/terms-of-service",
+    title: "Terms of Service | ToolHub",
+    description:
+      "Read the ToolHub Terms of Service. By using our free online tools, you agree to these terms.",
+  },
 };
 
 export default function TermsPage() {

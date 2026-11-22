@@ -5,6 +5,12 @@ export const metadata: Metadata = {
   description:
     "Get in touch with the ToolHub team. Send us your feedback, tool suggestions, or questions.",
   alternates: { canonical: "https://toolhub.org.in/contact" },
+  openGraph: {
+    url: "https://toolhub.org.in/contact",
+    title: "Contact Us | ToolHub",
+    description:
+      "Get in touch with the ToolHub team. Send us your feedback, tool suggestions, or questions.",
+  },
 };
 
 export default function ContactPage() {

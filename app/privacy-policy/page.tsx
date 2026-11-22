@@ -5,6 +5,12 @@ export const metadata: Metadata = {
   description:
     "Read the ToolHub Privacy Policy. We are committed to protecting your privacy. No personal data is collected or sold.",
   alternates: { canonical: "https://toolhub.org.in/privacy-policy" },
+  openGraph: {
+    url: "https://toolhub.org.in/privacy-policy",
+    title: "Privacy Policy | ToolHub",
+    description:
+      "Read the ToolHub Privacy Policy. We are committed to protecting your privacy. No personal data is collected or sold.",
+  },
 };
 
 export default function PrivacyPolicyPage() {

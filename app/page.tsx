@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   description:
     "ToolHub gives you free, instant browser tools — a real-time GPS speedometer, and more tools launching soon. No app download needed. Works on mobile and desktop.",
   alternates: { canonical: "https://toolhub.org.in" },
+  openGraph: {
+    url: "https://toolhub.org.in",
+    title: "ToolHub – Free Online Tools for Everyday Use",
+    description:
+      "Free browser-based tools — GPS speedometer, converters, and more. No signup, no app. Just open and use.",
+  },
 };
 
 const tools = [

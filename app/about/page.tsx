@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About ToolHub",
   description:
     "Learn about ToolHub — a free online tools platform built to give everyone access to fast, privacy-first browser tools with no app required.",
   alternates: { canonical: "https://toolhub.org.in/about" },
+  openGraph: {
+    url: "https://toolhub.org.in/about",
+    title: "About ToolHub",
+    description:
+      "Learn about ToolHub — a free online tools platform built to give everyone access to fast, privacy-first browser tools with no app required.",
+  },
 };
 
 export default function AboutPage() {
@@ -84,9 +91,9 @@ export default function AboutPage() {
 
         <p>
           If you have a suggestion, a tool idea, or just want to say hello —{" "}
-          <a href="/contact" className="text-blue-400 hover:underline">
+          <Link href="/contact" className="text-blue-400 hover:underline">
             get in touch
-          </a>
+          </Link>
           .
         </p>
       </div>

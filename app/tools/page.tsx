@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   description:
     "Browse all free browser-based tools on ToolHub — GPS speedometer, upcoming unit converter, timer, and more. No download needed.",
   alternates: { canonical: "https://toolhub.org.in/tools" },
+  openGraph: {
+    url: "https://toolhub.org.in/tools",
+    title: "All Free Online Tools | ToolHub",
+    description:
+      "Browse all free browser-based tools on ToolHub — GPS speedometer, upcoming unit converter, timer, and more. No download needed.",
+  },
 };
 
 const tools = [
