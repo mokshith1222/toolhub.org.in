@@ -1,5 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        // Enforce canonical non-www domain: redirect www.toolhub.org.in to toolhub.org.in
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.toolhub.org.in",
+          },
+        ],
+        destination: "https://toolhub.org.in/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

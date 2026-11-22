@@ -42,10 +42,10 @@ export default function Navbar() {
 
         {/* CTA */}
         <Link
-          href="/tools"
+          href="/tools/speed-converter"
           className="hidden md:inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
         >
-          Try a Tool
+          Try Speed Converter
         </Link>
 
         {/* Mobile Hamburger */}

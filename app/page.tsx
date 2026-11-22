@@ -2,58 +2,61 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Online Tools – GPS Speedometer & More",
+  title: "ToolHub – Free Browser-Based Online Tools & Utilities",
   description:
-    "ToolHub gives you free, instant browser tools — a real-time GPS speedometer, and more tools launching soon. No app download needed. Works on mobile and desktop.",
+    "ToolHub offers free, browser-based online tools including a Speed Unit Converter, Speed-Distance-Time Calculator, and real-time GPS Speedometer. No apps or signups needed.",
   alternates: { canonical: "https://toolhub.org.in" },
   openGraph: {
     url: "https://toolhub.org.in",
-    title: "ToolHub – Free Online Tools for Everyday Use",
+    title: "ToolHub – Free Browser-Based Online Tools",
     description:
-      "Free browser-based tools — GPS speedometer, converters, and more. No signup, no app. Just open and use.",
+      "Instant, privacy-first web utilities — speed conversion, travel calculations, and live GPS metrics. 100% free with no install.",
   },
 };
 
-const tools = [
+const workingTools = [
+  {
+    name: "Speed Unit Converter",
+    description:
+      "Convert speed values between km/h, mph, m/s, knots, ft/s, and Mach in real time with formula breakdowns and reference tables.",
+    href: "/tools/speed-converter",
+    icon: "🔁",
+    badge: "Available Now",
+    badgeColor: "bg-green-950 text-green-300 border-green-800/60",
+    external: false,
+  },
+  {
+    name: "Speed, Distance & Time Calculator",
+    description:
+      "Solve for average velocity, travel distance, or trip duration with flexible unit inputs and step-by-step mathematical explanations.",
+    href: "/tools/speed-distance-time",
+    icon: "⏱️",
+    badge: "Available Now",
+    badgeColor: "bg-green-950 text-green-300 border-green-800/60",
+    external: false,
+  },
   {
     name: "GPS Speedometer",
     description:
-      "Check your real-time speed in km/h or mph using your device's GPS. Tracks max speed, average speed, and GPS signal strength. Works on cars, bikes, and walking.",
+      "Measure real-time traveling speed in km/h or mph directly via satellite GPS in your mobile browser. Displays live speed and signal metrics.",
     href: "https://speedometer.toolhub.org.in/",
     icon: "🚀",
-    badge: "Live",
-    badgeColor: "bg-green-600",
+    badge: "Independent Tool",
+    badgeColor: "bg-blue-950 text-blue-300 border-blue-800/60",
     external: true,
   },
+];
+
+const upcomingTools = [
   {
-    name: "Unit Converter",
-    description:
-      "Convert between km/h and mph, meters and feet, kilograms and pounds, Celsius and Fahrenheit — all in one place. Coming soon.",
-    href: "#",
-    icon: "🔁",
-    badge: "Coming Soon",
-    badgeColor: "bg-yellow-600",
-    external: false,
-  },
-  {
-    name: "Stopwatch & Timer",
-    description:
-      "A precise browser-based stopwatch and countdown timer. No install, no fuss — just start timing from your browser.",
-    href: "#",
-    icon: "⏱️",
-    badge: "Coming Soon",
-    badgeColor: "bg-yellow-600",
-    external: false,
+    name: "Fuel Cost & Mileage Calculator",
+    description: "Estimate trip fuel expenses in Indian Rupees (INR) based on distance and vehicle mileage.",
+    icon: "⛽",
   },
   {
     name: "Internet Speed Test",
-    description:
-      "Test your internet download and upload speed directly from your browser. No Flash plugin required.",
-    href: "#",
+    description: "Measure browser network throughput and ping without third-party plugins.",
     icon: "📡",
-    badge: "Coming Soon",
-    badgeColor: "bg-yellow-600",
-    external: false,
   },
 ];
 
@@ -65,7 +68,7 @@ const jsonLd = {
       "@id": "https://toolhub.org.in/#website",
       url: "https://toolhub.org.in/",
       name: "ToolHub",
-      description: "Free browser-based online tools for everyday use",
+      description: "Free browser-based online tools and utilities for everyday calculations",
       publisher: { "@id": "https://toolhub.org.in/#organization" },
       inLanguage: "en-IN",
     },
@@ -100,43 +103,41 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-blue-900/40 border border-blue-700/50 text-blue-300 text-xs font-semibold px-3 py-1 rounded-full mb-6">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            Free tools, no signup required
+            100% Free • No Registration Required
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-5 leading-tight">
-            Free Online Tools for{" "}
-            <span className="text-blue-400">Everyday Use</span>
+            Fast, Free Online Tools for{" "}
+            <span className="text-blue-400">Everyday Tasks</span>
           </h1>
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-            ToolHub gives you fast, free, browser-based tools — no app download,
-            no account needed. Open your browser and get to work.
+            ToolHub provides privacy-focused, browser-based calculators and conversion utilities.
+            Zero software installation, zero account requirements, and instant client-side execution.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/tools"
-              className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-7 py-3 rounded-xl transition-colors text-base"
+              href="/tools/speed-converter"
+              className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-7 py-3.5 rounded-xl transition-colors text-base shadow-lg"
             >
-              Browse All Tools →
+              Try Speed Converter →
             </Link>
-            <a
-              href="https://speedometer.toolhub.org.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gray-800 hover:bg-gray-700 text-white font-semibold px-7 py-3 rounded-xl transition-colors text-base border border-gray-700"
+            <Link
+              href="/tools"
+              className="bg-gray-800 hover:bg-gray-700 text-white font-semibold px-7 py-3.5 rounded-xl transition-colors text-base border border-gray-700"
             >
-              🚀 Try Speedometer
-            </a>
+              Browse All Utilities
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Platform Metrics */}
       <section className="bg-gray-900 border-y border-gray-800 py-8 px-4">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { label: "Tools Available", value: "1+" },
-            { label: "App Download Required", value: "Zero" },
-            { label: "Signup Needed", value: "None" },
-            { label: "Cost", value: "Free" },
+            { label: "Active Utilities", value: "3" },
+            { label: "App Download", value: "Zero" },
+            { label: "Account Required", value: "None" },
+            { label: "Cost", value: "100% Free" },
           ].map((s) => (
             <div key={s.label}>
               <div className="text-3xl font-black text-blue-400 mb-1">{s.value}</div>
@@ -146,33 +147,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Tools Grid */}
+      {/* Working Tools Section */}
       <section className="py-16 px-4" id="tools">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-white mb-3">Our Tools</h2>
+            <h2 className="text-3xl font-bold text-white mb-3">Featured Online Tools</h2>
             <p className="text-gray-400 max-w-xl mx-auto">
-              Every tool is designed to work instantly in your browser — fast,
-              private, and reliable.
+              Ready-to-use tools designed to work instantly in your browser with zero latency.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            {tools.map((tool) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {workingTools.map((tool) => (
               <div
                 key={tool.name}
-                className="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col gap-4 hover:border-blue-700/50 transition-colors group"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col gap-4 hover:border-blue-600/50 transition-colors shadow-sm"
               >
                 <div className="flex items-start justify-between">
                   <span className="text-4xl">{tool.icon}</span>
                   <span
-                    className={`${tool.badgeColor} text-white text-xs font-semibold px-2.5 py-1 rounded-full`}
+                    className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${tool.badgeColor}`}
                   >
                     {tool.badge}
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-lg mb-1 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-white font-bold text-lg mb-2">
                     {tool.name}
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed">
@@ -184,23 +184,44 @@ export default function HomePage() {
                     href={tool.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors w-fit"
+                    className="mt-auto inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors w-fit"
                   >
-                    Open Tool →
+                    Open Speedometer →
                   </a>
                 ) : (
-                  <span className="mt-auto inline-flex items-center gap-2 bg-gray-800 text-gray-500 text-sm font-semibold px-4 py-2 rounded-lg w-fit cursor-not-allowed">
-                    Coming Soon
-                  </span>
+                  <Link
+                    href={tool.href}
+                    className="mt-auto inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors w-fit"
+                  >
+                    Open Tool →
+                  </Link>
                 )}
               </div>
             ))}
           </div>
+
+          {/* Planned additions overview */}
+          <div className="bg-gray-900/40 border border-gray-800 rounded-2xl p-6">
+            <div className="text-xs font-semibold uppercase text-yellow-400 mb-2 tracking-wider">
+              Roadmap & Planned Utilities
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {upcomingTools.map((u) => (
+                <div key={u.name} className="flex items-start gap-3">
+                  <span className="text-2xl">{u.icon}</span>
+                  <div>
+                    <h4 className="text-sm font-semibold text-white">{u.name}</h4>
+                    <p className="text-xs text-gray-400">{u.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Why ToolHub */}
-      <section className="py-16 px-4 bg-gray-900/50">
+      {/* Core Principles */}
+      <section className="py-16 px-4 bg-gray-900/50 border-t border-gray-800">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-white text-center mb-10">
             Why Use ToolHub?
@@ -209,18 +230,18 @@ export default function HomePage() {
             {[
               {
                 icon: "🌐",
-                title: "Works in Any Browser",
-                desc: "All tools run directly in your browser using standard web APIs. No plugins or installs.",
+                title: "Client-Side Processing",
+                desc: "Calculations run directly inside your browser via local JavaScript. No inputs are sent to remote servers.",
               },
               {
                 icon: "🔒",
-                title: "Privacy First",
-                desc: "We don't collect or store your personal data. GPS and sensor data stays on your device.",
+                title: "Strict Privacy",
+                desc: "We do not track user input or profile visitors. Your calculations and conversions remain entirely on your device.",
               },
               {
                 icon: "⚡",
-                title: "Instant & Free",
-                desc: "Open a tool and use it immediately. No account, no payment, no waiting.",
+                title: "Zero Setup Needed",
+                desc: "No mobile app installation, no sign-in walls, and no paywalls. Open the website and start working immediately.",
               },
             ].map((f) => (
               <div
@@ -233,27 +254,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 px-4 text-center">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to get started?
-          </h2>
-          <p className="text-gray-400 mb-7">
-            Try the GPS Speedometer right now — check your speed in km/h or mph
-            without installing anything.
-          </p>
-          <a
-            href="https://speedometer.toolhub.org.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl transition-colors text-lg"
-          >
-            🚀 Open GPS Speedometer
-          </a>
         </div>
       </section>
     </>

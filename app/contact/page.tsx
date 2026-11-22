@@ -1,110 +1,62 @@
 import type { Metadata } from "next";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact ToolHub – Inquiries & Suggestions",
   description:
-    "Get in touch with the ToolHub team. Send us your feedback, tool suggestions, or questions.",
+    "Get in touch with the creator of ToolHub. Send feedback, suggest new mathematical or conversion utilities, or report an issue.",
   alternates: { canonical: "https://toolhub.org.in/contact" },
   openGraph: {
     url: "https://toolhub.org.in/contact",
-    title: "Contact Us | ToolHub",
+    title: "Contact ToolHub – Feedback & Inquiries",
     description:
-      "Get in touch with the ToolHub team. Send us your feedback, tool suggestions, or questions.",
+      "Send feedback or suggestions directly to the creator of ToolHub. We typically reply within 1–2 business days.",
   },
 };
 
 export default function ContactPage() {
   return (
-    <div className="max-w-2xl mx-auto px-4 py-14">
-      <h1 className="text-4xl font-extrabold text-white mb-3">Contact Us</h1>
-      <p className="text-gray-400 mb-10">
-        Have a question, tool suggestion, or feedback? We&#39;d love to hear from
-        you. Fill in the form below or email us directly.
-      </p>
-
-      {/* Direct email */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-8 flex items-center gap-4">
-        <span className="text-3xl">✉️</span>
-        <div>
-          <div className="text-white font-semibold mb-0.5">Email us directly</div>
-          <a
-            href="mailto:mokshithnaik67@gmail.com"
-            className="text-blue-400 hover:underline text-sm"
-          >
-            mokshithnaik67@gmail.com
-          </a>
-        </div>
+    <div className="max-w-3xl mx-auto px-4 py-14">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3">
+          Contact Us
+        </h1>
+        <p className="text-gray-400 max-w-xl mx-auto text-base">
+          Have an idea for a new utility? Found a bug? Or have a suggestion for improving ToolHub?
+          We welcome your feedback.
+        </p>
       </div>
 
-      {/* Contact Form */}
-      <form
-        action="mailto:mokshithnaik67@gmail.com"
-        method="GET"
-        encType="text/plain"
-        className="space-y-5"
-      >
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1.5">
-            Your Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            placeholder="e.g. Ramesh Kumar"
-            className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 placeholder-gray-600"
-          />
+      {/* Direct email card */}
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <span className="text-3xl p-3 bg-blue-950/60 border border-blue-800/40 rounded-xl">✉️</span>
+          <div>
+            <div className="text-xs uppercase font-semibold text-gray-400 tracking-wider">
+              Primary Contact Email
+            </div>
+            <a
+              href="mailto:mokshithnaik67@gmail.com"
+              className="text-white hover:text-blue-400 transition-colors font-mono font-semibold text-base"
+            >
+              mokshithnaik67@gmail.com
+            </a>
+          </div>
         </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1.5">
-            Your Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder="you@example.com"
-            className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 placeholder-gray-600"
-          />
-        </div>
-        <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-1.5">
-            Subject
-          </label>
-          <input
-            id="subject"
-            name="subject"
-            type="text"
-            placeholder="Tool suggestion / Feedback / Question"
-            className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 placeholder-gray-600"
-          />
-        </div>
-        <div>
-          <label htmlFor="body" className="block text-sm font-medium text-gray-300 mb-1.5">
-            Message
-          </label>
-          <textarea
-            id="body"
-            name="body"
-            rows={5}
-            required
-            placeholder="Tell us your idea or question..."
-            className="w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 placeholder-gray-600 resize-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg transition-colors"
+        <a
+          href="mailto:mokshithnaik67@gmail.com?subject=ToolHub%20Inquiry"
+          className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors"
         >
-          Send Message →
-        </button>
-      </form>
+          Email Directly →
+        </a>
+      </div>
 
-      <p className="text-gray-600 text-xs mt-6 text-center">
-        We typically reply within 1–3 business days.
-      </p>
+      {/* Interactive Form */}
+      <ContactForm />
+
+      <div className="mt-8 text-center text-xs text-gray-500">
+        ToolHub is an independent personal project. Messages are reviewed by Mokshith Naik.
+      </div>
     </div>
   );
 }

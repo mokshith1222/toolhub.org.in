@@ -2,42 +2,55 @@ import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://toolhub.org.in";
-  const now = new Date();
+  // Fixed, reliable modification date representing this major release
+  const lastReleaseDate = new Date("2026-11-22T00:00:00.000Z");
 
   return [
     {
       url: baseUrl,
-      lastModified: now,
+      lastModified: lastReleaseDate,
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${baseUrl}/tools`,
-      lastModified: now,
+      lastModified: lastReleaseDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/tools/speed-converter`,
+      lastModified: lastReleaseDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/tools/speed-distance-time`,
+      lastModified: lastReleaseDate,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: now,
+      lastModified: lastReleaseDate,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: now,
+      lastModified: lastReleaseDate,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: now,
+      lastModified: lastReleaseDate,
       changeFrequency: "yearly",
       priority: 0.4,
     },
     {
       url: `${baseUrl}/terms-of-service`,
-      lastModified: now,
+      lastModified: lastReleaseDate,
       changeFrequency: "yearly",
       priority: 0.4,
     },
