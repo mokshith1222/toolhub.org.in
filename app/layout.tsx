@@ -66,6 +66,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://toolhub.org.in",
   },
+  verification: {
+    google: "qk9xEIeGpX5Z5Z803Jp8ldukwLorCNyTzxoUTAsiAwg",
+  },
 };
 
 export default function RootLayout({
