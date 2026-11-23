@@ -12,6 +12,12 @@ interface UnitDef {
   fromKmh: (v: number) => number;
 }
 
+const MAX_SUPPORTED_VALUE = 1e15;
+
+const isSafeValue = (v: number): boolean => {
+  return typeof v === "number" && Number.isFinite(v) && !isNaN(v) && v >= 0 && v <= MAX_SUPPORTED_VALUE;
+};
+
 const UNITS: Record<SpeedUnit, UnitDef> = {
   kmh: {
     id: "kmh",
@@ -61,13 +67,58 @@ export default function SpeedConverter() {
   const [inputValue, setInputValue] = useState<string>("100");
   const [sourceUnit, setSourceUnit] = useState<SpeedUnit>("kmh");
 
-  const numVal = parseFloat(inputValue);
-  const isValid = !isNaN(numVal) && numVal >= 0;
+  const trimmed = inputValue.trim();
 
-  // Convert input value to base km/h
-  const baseKmh = isValid ? UNITS[sourceUnit].toKmh(numVal) : 0;
+  let validationError = "";
+  let numVal = NaN;
+  let isValidInput = false;
+
+  if (trimmed !== "") {
+    if (/^[+-]?infinity$/i.test(trimmed) || /^nan$/i.test(trimmed)) {
+      validationError = "Please enter a valid numeric value.";
+    } else if (trimmed.startsWith("-")) {
+      if (/^-(?:\d+(?:\.\d+)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(trimmed)) {
+        validationError = "Please enter a non-negative number (0 or greater).";
+      } else {
+        validationError = "Please enter a valid numeric value.";
+      }
+    } else {
+      // Validate complete string: rejects partially numeric values such as 12abc
+      const isValidFormat = /^(?:\d+(?:\.\d+)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(trimmed);
+      if (!isValidFormat) {
+        validationError = "Please enter a valid numeric value.";
+      } else {
+        const parsed = Number(trimmed);
+        if (isNaN(parsed)) {
+          validationError = "Please enter a valid numeric value.";
+        } else if (!Number.isFinite(parsed) || parsed > MAX_SUPPORTED_VALUE) {
+          validationError = "Value exceeds supported calculation range.";
+        } else if (parsed < 0) {
+          validationError = "Please enter a non-negative number (0 or greater).";
+        } else {
+          numVal = parsed;
+          isValidInput = true;
+        }
+      }
+    }
+  }
+
+  // Convert input value to base km/h with range policy
+  let baseKmh = 0;
+  let isCalculationSafe = isValidInput && !validationError;
+
+  if (isCalculationSafe) {
+    const rawBase = UNITS[sourceUnit].toKmh(numVal);
+    if (isSafeValue(rawBase)) {
+      baseKmh = rawBase;
+    } else {
+      isCalculationSafe = false;
+      validationError = "Calculated value exceeds supported calculation range.";
+    }
+  }
 
   const formatResult = (v: number): string => {
+    if (!isSafeValue(v)) return "—";
     if (v === 0) return "0";
     if (v >= 1000) return v.toLocaleString("en-US", { maximumFractionDigits: 2 });
     if (v < 0.001) return v.toExponential(4);
@@ -98,16 +149,17 @@ export default function SpeedConverter() {
           </label>
           <input
             id="speed-input"
-            type="number"
-            min="0"
-            step="any"
+            type="text"
+            inputMode="decimal"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="e.g. 100"
-            className="w-full bg-gray-950 border border-gray-700 text-white text-lg font-mono rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 transition-colors"
+            className={`w-full bg-gray-950 border text-white text-lg font-mono rounded-xl px-4 py-3 focus:outline-none transition-colors ${
+              validationError ? "border-red-500 focus:border-red-500" : "border-gray-700 focus:border-blue-500"
+            }`}
           />
-          {!isValid && inputValue.trim() !== "" && (
-            <p className="text-red-400 text-xs mt-1">Please enter a valid positive number.</p>
+          {validationError && (
+            <p className="text-red-400 text-xs mt-1.5">{validationError}</p>
           )}
         </div>
 
@@ -159,7 +211,14 @@ export default function SpeedConverter() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {Object.values(UNITS).map((u) => {
           const isSelected = u.id === sourceUnit;
-          const converted = isValid ? u.fromKmh(baseKmh) : 0;
+          let displayText = "—";
+
+          if (isCalculationSafe && !validationError) {
+            const rawConverted = u.fromKmh(baseKmh);
+            if (isSafeValue(rawConverted)) {
+              displayText = formatResult(rawConverted);
+            }
+          }
 
           return (
             <div
@@ -175,7 +234,7 @@ export default function SpeedConverter() {
                 <span className="font-mono font-semibold text-blue-400">{u.symbol}</span>
               </div>
               <div className="text-2xl font-bold font-mono text-white tracking-tight">
-                {isValid ? formatResult(converted) : "—"}
+                {displayText}
               </div>
               {isSelected && (
                 <span className="inline-block mt-2 text-[10px] uppercase font-semibold text-blue-400 tracking-wider">
@@ -188,14 +247,12 @@ export default function SpeedConverter() {
       </div>
 
       {/* Formula summary */}
-      {isValid && (
-        <div className="mt-6 pt-6 border-t border-gray-800 text-xs text-gray-400 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <span>
-            Formula: 1 km/h = 0.621371 mph | 1 mph = 1.609344 km/h | 1 m/s = 3.6 km/h
-          </span>
-          <span className="text-gray-500">All conversions computed locally in your browser</span>
-        </div>
-      )}
+      <div className="mt-6 pt-6 border-t border-gray-800 text-xs text-gray-400 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <span>
+          Reference: 1 km/h = 0.621371 mph | 1 mph = 1.609344 km/h | 1 m/s = 3.6 km/h | Mach 1 = 1,234.8 km/h (fixed 20°C standard)
+        </span>
+        <span className="text-gray-500">Calculated locally in browser</span>
+      </div>
     </div>
   );
 }

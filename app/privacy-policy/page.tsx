@@ -3,13 +3,22 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy – ToolHub",
   description:
-    "Read the ToolHub Privacy Policy. Transparent information on client-side processing, cookies, advertising preparation, and hosting logs.",
+    "Read the ToolHub Privacy Policy. Transparent information on client-side processing, cookies, advertising integration, and hosting logs.",
   alternates: { canonical: "https://toolhub.org.in/privacy-policy" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in/privacy-policy",
     title: "Privacy Policy | ToolHub",
     description:
-      "Transparent disclosures regarding client-side data handling, minimal cookies, and future advertising compliance.",
+      "Transparent disclosures regarding client-side data handling, hosting logs, and advertising integrations.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | ToolHub",
+    description:
+      "Transparent disclosures regarding client-side data handling, hosting logs, and advertising integrations.",
   },
 };
 
@@ -36,9 +45,9 @@ export default function PrivacyPolicyPage() {
         <section>
           <h2 className="text-xl font-bold text-white mb-3">2. Client-Side Tool Processing</h2>
           <p>
-            The majority of calculators and conversion utilities hosted on ToolHub (including the Speed Unit
+            The calculators and conversion utilities hosted on ToolHub (including the Speed Unit
             Converter and the Speed Distance Time Calculator) execute entirely inside your local web browser using
-            standard JavaScript.
+            client-side JavaScript.
           </p>
           <p className="mt-2">
             The numerical values, conversion selections, and calculation parameters you enter into these tools are
@@ -48,12 +57,12 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">3. Geolocation & Satellite Metrics</h2>
+          <h2 className="text-xl font-bold text-white mb-3">3. Geolocation & Speedometer Companion</h2>
           <p>
             ToolHub links to our independent companion utility, the Online GPS Speedometer located at{" "}
-            <em>speedometer.toolhub.org.in</em>. That tool requests access to your device&apos;s physical location via
-            the standard browser Geolocation API solely to compute velocity and distance locally in your browser.
-            Location coordinates are never transmitted to our servers or stored in any database.
+            <em>speedometer.toolhub.org.in</em>. That separate utility requests access to your device&apos;s location via
+            the browser Geolocation API to compute speed metrics directly on your device. ToolHub itself does not collect,
+            receive, or store your geolocation coordinates.
           </p>
         </section>
 
@@ -78,38 +87,43 @@ export default function PrivacyPolicyPage() {
         <section>
           <h2 className="text-xl font-bold text-white mb-3">5. User Inquiries & Communications</h2>
           <p>
-            If you contact us via email at <em>mokshithnaik67@gmail.com</em> or use our interactive contact interface,
-            we collect only the information you voluntarily provide (such as your name, email address, subject,
-            and message). We use this information solely to review your inquiry and reply to your feedback.
-            We do not sell, rent, or trade your contact information.
+            The contact form on this website does not transmit information to a ToolHub backend or database. Instead,
+            it prepares a draft message in your device&apos;s default email program via a standard mailto link or allows
+            you to copy the formatted text. We only collect personal details (such as your name, email address, and
+            message content) if you choose to send an email to <em>mokshithnaik67@gmail.com</em>.
+          </p>
+          <p className="mt-2">
+            We use this information solely to review your message and reply to your inquiry. We do not sell, rent,
+            or trade personal email correspondence.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-bold text-white mb-3">6. Cookies & Tracking Technologies</h2>
           <p>
-            ToolHub does not deploy first-party profiling cookies, session tracking cookies, or biometric cookies.
-            Minimal technical cookies may be set by our hosting provider solely for edge security or content delivery.
+            ToolHub does not deploy first-party profiling cookies or user tracking databases. However, third-party
+            services—including our cloud hosting platform (for edge security and traffic management) and advertising
+            integrations (such as Google AdSense)—may utilize cookies or similar technologies as detailed below.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">7. Advertising Disclosures (Google AdSense Preparation)</h2>
+          <h2 className="text-xl font-bold text-white mb-3">7. Advertising Disclosures (Google AdSense Integration)</h2>
           <p>
-            ToolHub is designed to be supported by online advertising to keep all utilities freely accessible.
-            We are actively preparing this website for review under Google AdSense publisher policies.
+            Google AdSense code is integrated into the ToolHub website to support free access to our utilities.
+            The display of advertisements and active ad serving depend on Google AdSense account approval and serving status.
           </p>
           <p className="mt-2">
-            When Google AdSense or authorized third-party ad networks are activated:
+            When Google AdSense or authorized third-party ad networks are active:
           </p>
           <ul className="list-disc list-inside space-y-1.5 text-gray-400 mt-2">
             <li>
-              Third-party vendors, including Google, use cookies to serve ads based on a user&apos;s prior visits
-              to this website or other websites on the internet.
+              Third-party vendors, including Google, use cookies and similar technologies to serve ads based on a
+              user&apos;s prior visits to this website or other websites on the Internet.
             </li>
             <li>
               Google&apos;s use of advertising cookies enables it and its partners to serve ads to users based on their
-              visit to our sites and/or other sites on the Internet.
+              visit to our site and/or other sites on the Internet.
             </li>
             <li>
               Users may opt out of personalized advertising by visiting{" "}
@@ -136,16 +150,47 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">8. Third-Party Links</h2>
+          <h2 className="text-xl font-bold text-white mb-3">8. Regional Privacy Rights (GDPR & US State Privacy)</h2>
+          <p>
+            Depending on your geographic location, data protection regulations provide specific privacy rights:
+          </p>
+          <div className="space-y-3 mt-3 text-xs md:text-sm text-gray-400">
+            <div>
+              <strong className="text-white">European Economic Area (EEA) & United Kingdom (GDPR):</strong> Users in
+              the EEA and UK have the right to request access to, rectification of, or erasure of any personal information
+              they have voluntarily provided to us (such as email communications), or to restrict its processing. To exercise
+              these rights, you may contact us at <em>mokshithnaik67@gmail.com</em>.
+            </div>
+            <div>
+              <strong className="text-white">California & US State Privacy (CPRA / CCPA):</strong> Residents of California
+              and other applicable US states have statutory rights to request information regarding personal data collection and
+              request deletion. ToolHub does not sell personal contact information for monetary compensation. Third-party advertising
+              partners (such as Google AdSense) may process online identifiers and cookies for advertising purposes as described in
+              their policies. Users can manage ad personalization directly through{" "}
+              <a
+                href="https://www.google.com/settings/ads"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
+              >
+                Google Ads Settings
+              </a>{" "}
+              and browser cookie controls.
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-bold text-white mb-3">9. Third-Party Links</h2>
           <p>
             Our website may contain hyperlinks to third-party websites or services (including external reference
-            sources or tools). We do not control and are not responsible for the privacy practices or content of
-            external websites.
+            sources or our independent speedometer utility). We do not control and are not responsible for the privacy
+            practices or content of external websites.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">9. Children&apos;s Online Privacy</h2>
+          <h2 className="text-xl font-bold text-white mb-3">10. Children&apos;s Online Privacy</h2>
           <p>
             ToolHub provides general-audience utility tools and is not directed to children under 13 years of age.
             We do not knowingly collect personal identifiable information from children.
@@ -153,10 +198,10 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">10. Policy Updates & Contact</h2>
+          <h2 className="text-xl font-bold text-white mb-3">11. Policy Updates & Contact</h2>
           <p>
-            We may update this Privacy Policy periodically to reflect changes in our tools, technology, or legal
-            requirements. Updates will be published on this page with an updated effective date.
+            We may update this Privacy Policy periodically to reflect changes in our tools, technology, advertising status,
+            or legal requirements. Updates will be published on this page with an updated effective date.
           </p>
           <p className="mt-2">
             For questions regarding this policy, please reach out to:{" "}

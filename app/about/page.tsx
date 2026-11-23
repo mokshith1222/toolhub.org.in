@@ -4,13 +4,22 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About ToolHub – Our Purpose and Mission",
   description:
-    "Learn about ToolHub, an independent collection of free, privacy-first online tools and calculators built by Mokshith Naik for everyday use.",
+    "Learn about ToolHub, an independent collection of free online tools and calculators built by Mokshith Naik for everyday use.",
   alternates: { canonical: "https://toolhub.org.in/about" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in/about",
     title: "About ToolHub – Mission and Background",
     description:
-      "Learn why ToolHub was created: fast, browser-based utilities with zero registration, zero app downloads, and complete client-side data privacy.",
+      "Learn why ToolHub was created: fast, browser-based utilities with zero registration, zero app downloads, and client-side processing.",
+  },
+  twitter: {
+    card: "summary",
+    title: "About ToolHub – Mission and Background",
+    description:
+      "Learn why ToolHub was created: fast, browser-based utilities with zero registration, zero app downloads, and client-side processing.",
   },
 };
 
@@ -34,12 +43,12 @@ export default function AboutPage() {
           <h2 className="text-2xl font-bold text-white mb-3">Why We Are Building It</h2>
           <p className="mb-4">
             Many basic everyday digital utilities—such as unit converters, speed calculators, or
-            simple math tools—have become cluttered with intrusive popups, forced mobile app downloads,
-            unnecessary user signups, or heavy tracking scripts that slow down devices.
+            simple math tools—frequently require separate application downloads, account registrations,
+            or cumbersome multi-step interfaces.
           </p>
           <p>
-            ToolHub was created to solve this frustration. Our goal is to provide clean, minimalist,
-            and fast-loading utilities that respect user time and device resources.
+            ToolHub was created to offer a clean, direct alternative: fast-loading, browser-based
+            utilities designed to be accessible instantly on any device with zero friction.
           </p>
         </section>
 
@@ -58,7 +67,7 @@ export default function AboutPage() {
               speed, distance, or travel time for commuters, drivers, and students.
             </li>
             <li>
-              <strong className="text-gray-200">Browser Satellite Metrics:</strong> Our companion utility, the{" "}
+              <strong className="text-gray-200">GPS Speedometer:</strong> Our companion utility, the{" "}
               <a
                 href="https://speedometer.toolhub.org.in/"
                 target="_blank"
@@ -67,7 +76,7 @@ export default function AboutPage() {
               >
                 Online GPS Speedometer
               </a>
-              , which utilizes standard device geolocation sensors without transmitting location data.
+              , which utilizes device GPS and browser location services to compute and display real-time travel speed.
             </li>
             <li>
               <strong className="text-gray-200">Upcoming Utilities:</strong> Fuel mileage calculators,
@@ -82,8 +91,8 @@ export default function AboutPage() {
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
               <h3 className="font-semibold text-white mb-1.5">Client-Side Computation</h3>
               <p className="text-xs text-gray-400 leading-relaxed">
-                Whenever technically feasible, all calculations run in your browser using local JavaScript.
-                Your numbers, conversions, and travel inputs stay on your device.
+                Whenever technically feasible, calculations run directly in your browser using local JavaScript.
+                Your numerical inputs, selections, and travel parameters are processed on your device rather than sent to remote ToolHub servers.
               </p>
             </div>
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
@@ -95,15 +104,14 @@ export default function AboutPage() {
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
               <h3 className="font-semibold text-white mb-1.5">Transparent Disclosures</h3>
               <p className="text-xs text-gray-400 leading-relaxed">
-                We clearly disclose how tools work, provide the mathematical formulas used, and clearly state
-                data handling practices.
+                We clearly disclose how tools work, provide the mathematical formulas used, and accurately state
+                our data handling and third-party integration practices.
               </p>
             </div>
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
               <h3 className="font-semibold text-white mb-1.5">Free Accessibility</h3>
               <p className="text-xs text-gray-400 leading-relaxed">
-                All tools are provided free of charge, supported in the future by standard, non-intrusive
-                advertisements in accordance with publisher policies.
+                All tools are provided free of charge. ToolHub integrates Google AdSense code in preparation for publisher review; once approved and serving is enabled, non-intrusive advertisements will help support ongoing hosting and maintenance.
               </p>
             </div>
           </div>

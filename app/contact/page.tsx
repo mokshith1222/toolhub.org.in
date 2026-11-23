@@ -7,10 +7,19 @@ export const metadata: Metadata = {
     "Get in touch with the creator of ToolHub. Send feedback, suggest new mathematical or conversion utilities, or report an issue.",
   alternates: { canonical: "https://toolhub.org.in/contact" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in/contact",
     title: "Contact ToolHub – Feedback & Inquiries",
     description:
-      "Send feedback or suggestions directly to the creator of ToolHub. We typically reply within 1–2 business days.",
+      "Send feedback, tool suggestions, or bug reports directly to the creator of ToolHub.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact ToolHub – Feedback & Inquiries",
+    description:
+      "Send feedback, tool suggestions, or bug reports directly to the creator of ToolHub.",
   },
 };
 
@@ -55,7 +64,7 @@ export default function ContactPage() {
       <ContactForm />
 
       <div className="mt-8 text-center text-xs text-gray-500">
-        ToolHub is an independent personal project. Messages are reviewed by Mokshith Naik.
+        ToolHub is an independent personal project. Messages sent by email are reviewed by Mokshith Naik.
       </div>
     </div>
   );

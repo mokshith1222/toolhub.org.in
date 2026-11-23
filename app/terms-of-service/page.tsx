@@ -6,7 +6,16 @@ export const metadata: Metadata = {
     "Read the ToolHub Terms of Service. Clear terms governing the use of our free web utilities and calculators.",
   alternates: { canonical: "https://toolhub.org.in/terms-of-service" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in/terms-of-service",
+    title: "Terms of Service | ToolHub",
+    description:
+      "Terms of service governing the usage of ToolHub conversion tools, calculators, and informational resources.",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Terms of Service | ToolHub",
     description:
       "Terms of service governing the usage of ToolHub conversion tools, calculators, and informational resources.",
@@ -35,7 +44,7 @@ export default function TermsPage() {
           <p>
             ToolHub is an independent personal software project created and operated by Mokshith Naik in India.
             The platform provides browser-based mathematical calculators, speed unit converters, and educational
-            reference content free of charge for informational and general utility purposes.
+            reference content free of charge for informational, educational, and general utility purposes.
           </p>
         </section>
 
@@ -53,17 +62,17 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-white mb-3">4. Mathematical Accuracy & Utility Disclaimer</h2>
           <p>
-            While we take rigorous care to ensure our calculation algorithms and unit conversion constants (such as
-            km/h to mph conversion factors) reflect accepted mathematical and SI standards:
+            While we take care to ensure our calculation algorithms and unit conversion constants (such as
+            km/h to mph conversion factors) reflect accepted mathematical and SI definitions:
           </p>
           <ul className="list-disc list-inside space-y-1.5 text-gray-400 mt-2">
             <li>
               All tools, equations, and outputs are provided on an <strong className="text-white">&quot;as is&quot;</strong> and{" "}
-              <strong className="text-white">&quot;as available&quot;</strong> basis without warranty of any kind.
+              <strong className="text-white">&quot;as available&quot;</strong> basis for informational, educational, and general estimation purposes.
             </li>
             <li>
-              ToolHub utilities are not intended as primary reference instruments for safety-critical aviation,
-              commercial automotive calibration, medical, or life-critical applications.
+              ToolHub utilities are not certified instruments and should not be used as primary reference tools for safety-critical aviation,
+              commercial automotive calibration, structural engineering, medical, or life-critical applications.
             </li>
             <li>
               For satellite-based speedometers linked via subdomains, speed readings depend on external hardware,
@@ -89,14 +98,17 @@ export default function TermsPage() {
             any way connected with the use or inability to use this website, even if advised of the possibility of
             such damages.
           </p>
+          <p className="mt-2 font-medium text-gray-200">
+            Nothing in these Terms of Service shall limit or exclude any liability that cannot be legally excluded or limited under applicable law.
+          </p>
         </section>
 
         <section>
           <h2 className="text-xl font-bold text-white mb-3">7. Governing Law & Jurisdiction</h2>
           <p>
             These Terms shall be governed by and construed in accordance with the laws of the Republic of India.
-            Any legal dispute or claim arising out of or relating to these Terms shall be subject to the exclusive
-            jurisdiction of the competent courts in India.
+            Any legal dispute, claim, or controversy arising out of or relating to these Terms or the use of ToolHub
+            shall be subject to the jurisdiction of the competent courts in India.
           </p>
         </section>
 

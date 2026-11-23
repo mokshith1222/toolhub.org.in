@@ -7,10 +7,19 @@ export const metadata: Metadata = {
     "ToolHub offers free, browser-based online tools including a Speed Unit Converter, Speed-Distance-Time Calculator, and real-time GPS Speedometer. No apps or signups needed.",
   alternates: { canonical: "https://toolhub.org.in" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in",
     title: "ToolHub – Free Browser-Based Online Tools",
     description:
-      "Instant, privacy-first web utilities — speed conversion, travel calculations, and live GPS metrics. 100% free with no install.",
+      "Instant, lightweight web utilities — speed conversion, travel calculations, and live GPS metrics. 100% free with no install.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ToolHub – Free Browser-Based Online Tools",
+    description:
+      "Instant, lightweight web utilities — speed conversion, travel calculations, and live GPS metrics. 100% free with no install.",
   },
 };
 
@@ -28,7 +37,7 @@ const workingTools = [
   {
     name: "Speed, Distance & Time Calculator",
     description:
-      "Solve for average velocity, travel distance, or trip duration with flexible unit inputs and step-by-step mathematical explanations.",
+      "Solve for average speed, travel distance, or trip duration with flexible unit inputs and step-by-step mathematical explanations.",
     href: "/tools/speed-distance-time",
     icon: "⏱️",
     badge: "Available Now",
@@ -38,7 +47,7 @@ const workingTools = [
   {
     name: "GPS Speedometer",
     description:
-      "Measure real-time traveling speed in km/h or mph directly via satellite GPS in your mobile browser. Displays live speed and signal metrics.",
+      "Measure real-time traveling speed in km/h or mph directly using device GPS and location services in your mobile browser. Displays live speed and signal metrics.",
     href: "https://speedometer.toolhub.org.in/",
     icon: "🚀",
     badge: "Independent Tool",
@@ -110,8 +119,8 @@ export default function HomePage() {
             <span className="text-blue-400">Everyday Tasks</span>
           </h1>
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-            ToolHub provides privacy-focused, browser-based calculators and conversion utilities.
-            Zero software installation, zero account requirements, and instant client-side execution.
+            ToolHub provides browser-based calculators and conversion utilities designed for simplicity and speed.
+            Zero software installation, zero account requirements, and client-side execution.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -231,12 +240,12 @@ export default function HomePage() {
               {
                 icon: "🌐",
                 title: "Client-Side Processing",
-                desc: "Calculations run directly inside your browser via local JavaScript. No inputs are sent to remote servers.",
+                desc: "Calculations run directly inside your browser via local JavaScript. Inputs are processed on your device.",
               },
               {
                 icon: "🔒",
-                title: "Strict Privacy",
-                desc: "We do not track user input or profile visitors. Your calculations and conversions remain entirely on your device.",
+                title: "Privacy Focused",
+                desc: "We do not require user accounts or store calculation inputs. Your conversion parameters remain on your device.",
               },
               {
                 icon: "⚡",

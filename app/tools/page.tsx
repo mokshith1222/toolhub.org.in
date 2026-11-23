@@ -7,7 +7,16 @@ export const metadata: Metadata = {
     "Explore free online browser tools on ToolHub — Speed Converter, Speed Distance Time Calculator, and real-time GPS Speedometer. No downloads or signups required.",
   alternates: { canonical: "https://toolhub.org.in/tools" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in/tools",
+    title: "Online Web Tools Directory | ToolHub",
+    description:
+      "Explore free browser-based tools on ToolHub. Instant calculators, converters, and travel utilities.",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Online Web Tools Directory | ToolHub",
     description:
       "Explore free browser-based tools on ToolHub. Instant calculators, converters, and travel utilities.",
@@ -36,7 +45,7 @@ const workingTools = [
   {
     name: "Free Online GPS Speedometer",
     description:
-      "Measure your real-time travel speed in km/h or mph directly via satellite GPS in your mobile browser. Tracks current speed, peak speed, and signal diagnostics.",
+      "Measure your real-time travel speed in km/h or mph directly using device GPS and location services in your mobile browser. Displays current speed and travel metrics.",
     href: "https://speedometer.toolhub.org.in/",
     icon: "🚀",
     tags: ["GPS", "Live Velocity", "Mobile Utility"],
@@ -77,7 +86,7 @@ export default function ToolsPage() {
         </h1>
         <p className="text-gray-400 max-w-2xl mx-auto text-base">
           Every active utility on ToolHub runs directly inside your web browser.
-          Zero downloads, zero registration, and complete client-side data privacy.
+          Zero downloads, zero registration, with calculations performed directly on your device.
         </p>
       </div>
 
@@ -145,9 +154,9 @@ export default function ToolsPage() {
         <div className="flex items-center gap-3 mb-6">
           <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
           <h2 className="text-xl font-bold text-white tracking-wide">
-            Under Development
+            Planned Utilities
           </h2>
-          <span className="text-xs text-gray-500">(Planned additions)</span>
+          <span className="text-xs text-gray-500">(Future additions)</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -159,7 +168,7 @@ export default function ToolsPage() {
               <div className="flex items-start justify-between gap-2">
                 <span className="text-3xl grayscale">{tool.icon}</span>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-yellow-950/60 text-yellow-300 border border-yellow-800/50">
-                  In Progress
+                  Planned
                 </span>
               </div>
               <div>

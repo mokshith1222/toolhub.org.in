@@ -3,19 +3,28 @@ import Link from "next/link";
 import SpeedConverter from "@/components/SpeedConverter";
 
 export const metadata: Metadata = {
-  title: "Speed Unit Converter – km/h, mph, m/s, Knots",
+  title: "Speed Unit Converter – km/h, mph, m/s, Knots, ft/s, Mach",
   description:
-    "Convert between kilometers per hour (km/h), miles per hour (mph), meters per second (m/s), and knots. Free instant online tool with conversion formulas.",
+    "Convert between kilometers per hour (km/h), miles per hour (mph), meters per second (m/s), knots, feet per second (ft/s), and Mach. Instant formulas, examples, and FAQs.",
   alternates: { canonical: "https://toolhub.org.in/tools/speed-converter" },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "ToolHub",
     url: "https://toolhub.org.in/tools/speed-converter",
     title: "Speed Unit Converter – km/h, mph, m/s, Knots | ToolHub",
     description:
-      "Convert speed values between km/h, mph, m/s, knots, and ft/s instantly in your browser.",
+      "Convert speed values between km/h, mph, m/s, knots, and ft/s instantly in your browser. Complete conversion formulas and reference tables.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Speed Unit Converter – km/h, mph, m/s, Knots | ToolHub",
+    description:
+      "Convert speed values between km/h, mph, m/s, knots, and ft/s instantly in your browser. Complete conversion formulas and reference tables.",
   },
 };
 
-const jsonLd = {
+const webAppSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "Speed Unit Converter",
@@ -28,7 +37,46 @@ const jsonLd = {
     priceCurrency: "INR",
   },
   description:
-    "Free online speed converter to convert between km/h, mph, m/s, knots, ft/s, and Mach.",
+    "Free online speed converter to convert between km/h, mph, m/s, knots, ft/s, and Mach with instant calculations.",
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Why do some countries use mph while others use km/h?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The majority of the world uses the International System of Units (SI metric system), measuring road speed in kilometers per hour (km/h). A few nations, primarily the United States, the United Kingdom, and several Caribbean nations, continue to use the Imperial / US Customary system measuring distance in miles and speed in miles per hour (mph).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How can I quickly estimate km/h to mph in my head?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A quick mental rule of thumb is multiplying the km/h value by 0.6. For example, 100 km/h × 0.6 = 60 mph (actual is 62.14 mph). Another popular shortcut uses the Fibonacci sequence (3, 5, 8, 13, 21, 34, 55, 89) as an approximation: 50 km/h is approximately 31 mph (actual is 31.07 mph), and 80 km/h is approximately 50 mph (actual is 49.71 mph).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is a knot and where is it used?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A knot (kn) equals one nautical mile per hour (exactly 1.852 km/h or approximately 1.151 mph). It is the global standard unit in aviation, marine navigation, and meteorology. While one nautical mile is defined as exactly 1,852 metres, its historical relationship to one minute of latitude is approximate because Earth's latitude geometry varies (Earth is an oblate spheroid, not a perfect sphere).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is Mach speed a constant number?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Mach 1 represents the local speed of sound, which in reality varies depending on air temperature and pressure. For standard conversion purposes, this calculator uses a fixed reference speed of sound at sea level in dry air at 20°C (Mach 1 = 1,234.8 km/h, 343 m/s, or approximately 767.3 mph). The calculator does not dynamically adjust Mach conversion for changing altitude or temperature.",
+      },
+    },
+  ],
 };
 
 export default function SpeedConverterPage() {
@@ -36,7 +84,11 @@ export default function SpeedConverterPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <div className="max-w-4xl mx-auto px-4 py-12">
@@ -67,8 +119,9 @@ export default function SpeedConverterPage() {
             Speed Unit Converter
           </h1>
           <p className="text-gray-400 text-base md:text-lg leading-relaxed">
-            Convert speed measurements across kilometers per hour (km/h), miles per hour (mph),
-            meters per second (m/s), knots, and feet per second. All calculations run client-side.
+            Convert speed values across kilometers per hour (km/h), miles per hour (mph),
+            meters per second (m/s), knots, feet per second (ft/s), and Mach.
+            Instant, client-side calculations with comprehensive formulas.
           </p>
         </div>
 
@@ -77,52 +130,180 @@ export default function SpeedConverterPage() {
           <SpeedConverter />
         </div>
 
-        {/* Informational & Educational Content for Users & AdSense */}
-        <div className="space-y-10 text-gray-300 leading-relaxed border-t border-gray-800 pt-10">
+        {/* Informational & Educational Content */}
+        <div className="space-y-12 text-gray-300 leading-relaxed border-t border-gray-800 pt-10">
+          {/* Supported Units Explanation */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-3">
-              Common Speed Conversion Formulas
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Supported Speed Units Explained
             </h2>
-            <p className="mb-4">
-              Speed measures the distance traveled per unit of time. Depending on your region or application,
-              different standards are used:
-            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-                <div className="font-semibold text-white mb-1">km/h to mph</div>
-                <div className="font-mono text-xs text-blue-400 mb-2">mph = km/h × 0.621371</div>
-                <p className="text-xs text-gray-400">
-                  Used when converting metric road speeds (common in India, Europe) to Imperial road speeds (USA, UK).
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white text-base mb-1">
+                  Kilometers per Hour (km/h)
+                </h3>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  The standard speed measurement used for road transport in India, the European Union, Canada,
+                  Australia, and most nations worldwide. Defined as the distance of 1,000 meters covered in one hour (3,600 seconds).
                 </p>
               </div>
-              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-                <div className="font-semibold text-white mb-1">mph to km/h</div>
-                <div className="font-mono text-xs text-blue-400 mb-2">km/h = mph × 1.609344</div>
-                <p className="text-xs text-gray-400">
-                  Essential for international travelers renting vehicles or reading foreign vehicle dashboards.
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white text-base mb-1">
+                  Miles per Hour (mph)
+                </h3>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  The primary speed metric in the United States and the United Kingdom. One international statute mile
+                  equals exactly 1,609.344 meters, making 1 mph equal to 1.609344 km/h.
                 </p>
               </div>
-              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-                <div className="font-semibold text-white mb-1">km/h to m/s</div>
-                <div className="font-mono text-xs text-blue-400 mb-2">m/s = km/h ÷ 3.6</div>
-                <p className="text-xs text-gray-400">
-                  Standard International (SI) unit widely used in physics, engineering, and scientific calculations.
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white text-base mb-1">
+                  Meters per Second (m/s)
+                </h3>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  The fundamental base unit of velocity in the International System of Units (SI). Used extensively
+                  in physics, ballistics, meteorology (wind speed), and civil engineering.
                 </p>
               </div>
-              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-                <div className="font-semibold text-white mb-1">km/h to Knots</div>
-                <div className="font-mono text-xs text-blue-400 mb-2">knots = km/h ÷ 1.852</div>
-                <p className="text-xs text-gray-400">
-                  One knot represents one nautical mile per hour, standard in maritime navigation and aviation.
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white text-base mb-1">
+                  Knots (kn / kt)
+                </h3>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  Equal to one nautical mile per hour (exactly 1.852 km/h). Mandated globally for aircraft airspeed,
+                  flight navigation, ocean vessels, and maritime weather advisories.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white text-base mb-1">
+                  Feet per Second (ft/s)
+                </h3>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  Used in aeronautical engineering and ballistic velocities in countries utilizing
+                  Imperial standards. One foot per second equals exactly 1.09728 km/h (or 0.3048 m/s).
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white text-base mb-1">
+                  Mach (Ma)
+                </h3>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  A dimensionless ratio representing speed relative to the local speed of sound. This converter uses a standard fixed reference speed of sound at sea level and 20°C (Mach 1 = 1,234.8 km/h or 343 m/s). It does not dynamically adjust for altitude or temperature variations.
                 </p>
               </div>
             </div>
           </section>
 
+          {/* Mathematical Formulas & Step-by-Step Examples */}
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Mathematical Conversion Formulas & Step-by-Step Examples
+            </h2>
+            <div className="space-y-4">
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="font-semibold text-white">Converting km/h to mph</h3>
+                  <span className="font-mono text-xs text-blue-400">Formula: mph = km/h ÷ 1.609344</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-2">
+                  <strong>Worked Example:</strong> Convert 120 km/h (expressway speed) to mph.
+                </p>
+                <div className="bg-gray-950 p-3 rounded-lg font-mono text-xs text-gray-300">
+                  mph = 120 ÷ 1.609344 = 120 × 0.62137119 = <strong>74.56 mph</strong>
+                </div>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="font-semibold text-white">Converting mph to km/h</h3>
+                  <span className="font-mono text-xs text-blue-400">Formula: km/h = mph × 1.609344</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-2">
+                  <strong>Worked Example:</strong> Convert 65 mph (US interstate speed) to km/h.
+                </p>
+                <div className="bg-gray-950 p-3 rounded-lg font-mono text-xs text-gray-300">
+                  km/h = 65 × 1.609344 = <strong>104.61 km/h</strong>
+                </div>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="font-semibold text-white">Converting km/h to m/s</h3>
+                  <span className="font-mono text-xs text-blue-400">Formula: m/s = km/h ÷ 3.6</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-2">
+                  <strong>Worked Example:</strong> Convert a 90 km/h vehicle speed into physics SI units (m/s).
+                </p>
+                <div className="bg-gray-950 p-3 rounded-lg font-mono text-xs text-gray-300">
+                  m/s = (90 × 1,000 m) ÷ 3,600 s = 90 ÷ 3.6 = <strong>25.00 m/s</strong>
+                </div>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="font-semibold text-white">Converting Knots to km/h</h3>
+                  <span className="font-mono text-xs text-blue-400">Formula: km/h = kn × 1.852</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-2">
+                  <strong>Worked Example:</strong> Convert 450 knots (cruising jet speed) to km/h.
+                </p>
+                <div className="bg-gray-950 p-3 rounded-lg font-mono text-xs text-gray-300">
+                  km/h = 450 × 1.852 = <strong>833.40 km/h</strong> (approx. 517.85 mph)
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Use Cases */}
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Common Real-World Use Cases
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-400">
+              <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
+                <h3 className="text-white font-semibold mb-1">🚗 Driving & Car Rentals Abroad</h3>
+                <p className="text-xs">
+                  Travelers renting a car in the UK or US encounter road signs in mph, while visitors driving in India,
+                  Europe, or Canada see limits in km/h. This converter prevents speeding violations when reading unfamiliar speedometer dials.
+                </p>
+              </div>
+              <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
+                <h3 className="text-white font-semibold mb-1">✈️ Aviation & Sailing Planning</h3>
+                <p className="text-xs">
+                  Pilots and boat captains measure vessel speed in knots. Converting to km/h or mph helps passengers
+                  and shore crews easily understand journey progress and arrival schedules.
+                </p>
+              </div>
+              <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
+                <h3 className="text-white font-semibold mb-1">🔬 Science, Engineering & STEM</h3>
+                <p className="text-xs">
+                  Physics problems routinely require vehicle speeds expressed in km/h to be converted to m/s before
+                  calculating kinetic energy ($E_k = \frac{1}{2}mv^2$) or stopping distance.
+                </p>
+              </div>
+              <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
+                <h3 className="text-white font-semibold mb-1">🏃 Athletics, Cycling & Fitness</h3>
+                <p className="text-xs">
+                  Runners and cyclists often switch between metric pace (min/km) and treadmill speed presets (mph or km/h)
+                  to set targeted interval workout speeds.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Reference Table */}
           <section>
             <h2 className="text-2xl font-bold text-white mb-3">
               Everyday Speed Reference Points
             </h2>
+            <p className="text-xs text-gray-400 mb-3 italic">
+              Note: The speed figures listed below are illustrative everyday reference examples and general approximations, not fixed or universal standards.
+            </p>
             <div className="overflow-x-auto">
               <table className="w-full text-left border border-gray-800 text-sm">
                 <thead className="bg-gray-900 text-gray-200">
@@ -131,65 +312,125 @@ export default function SpeedConverterPage() {
                     <th className="p-3 border-b border-gray-800">km/h</th>
                     <th className="p-3 border-b border-gray-800">mph</th>
                     <th className="p-3 border-b border-gray-800">m/s</th>
+                    <th className="p-3 border-b border-gray-800">Knots</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800">
+                <tbody className="divide-y divide-gray-800 text-xs md:text-sm">
                   <tr>
-                    <td className="p-3 text-white">Average Human Walking</td>
-                    <td className="p-3 font-mono">5 km/h</td>
+                    <td className="p-3 text-white">Average Human Walking Pace</td>
+                    <td className="p-3 font-mono">5.0 km/h</td>
                     <td className="p-3 font-mono">3.1 mph</td>
                     <td className="p-3 font-mono">1.39 m/s</td>
+                    <td className="p-3 font-mono">2.7 kn</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-white">Moderate Bicycle Commute</td>
-                    <td className="p-3 font-mono">20 km/h</td>
+                    <td className="p-3 font-mono">20.0 km/h</td>
                     <td className="p-3 font-mono">12.4 mph</td>
                     <td className="p-3 font-mono">5.56 m/s</td>
+                    <td className="p-3 font-mono">10.8 kn</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-white">Urban City Driving Limit</td>
-                    <td className="p-3 font-mono">50 km/h</td>
+                    <td className="p-3 font-mono">50.0 km/h</td>
                     <td className="p-3 font-mono">31.1 mph</td>
                     <td className="p-3 font-mono">13.89 m/s</td>
+                    <td className="p-3 font-mono">27.0 kn</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-white">Expressway / Highway Speed</td>
-                    <td className="p-3 font-mono">100 km/h</td>
+                    <td className="p-3 font-mono">100.0 km/h</td>
                     <td className="p-3 font-mono">62.1 mph</td>
                     <td className="p-3 font-mono">27.78 m/s</td>
+                    <td className="p-3 font-mono">54.0 kn</td>
                   </tr>
                   <tr>
-                    <td className="p-3 text-white">High-Speed Passenger Train (Vande Bharat)</td>
-                    <td className="p-3 font-mono">160 km/h</td>
+                    <td className="p-3 text-white">High-Speed Train (e.g. Vande Bharat Express)</td>
+                    <td className="p-3 font-mono">160.0 km/h</td>
                     <td className="p-3 font-mono">99.4 mph</td>
                     <td className="p-3 font-mono">44.44 m/s</td>
+                    <td className="p-3 font-mono">86.4 kn</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-white">Commercial Airliner Cruising Speed</td>
-                    <td className="p-3 font-mono">900 km/h</td>
+                    <td className="p-3 font-mono">900.0 km/h</td>
                     <td className="p-3 font-mono">559.2 mph</td>
                     <td className="p-3 font-mono">250.00 m/s</td>
+                    <td className="p-3 font-mono">485.9 kn</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 text-white">Speed of Sound at Sea Level, 20°C (Mach 1)</td>
+                    <td className="p-3 font-mono">1,234.8 km/h</td>
+                    <td className="p-3 font-mono">767.3 mph</td>
+                    <td className="p-3 font-mono">343.00 m/s</td>
+                    <td className="p-3 font-mono">666.7 kn</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </section>
 
+          {/* Frequently Asked Questions */}
           <section>
-            <h2 className="text-2xl font-bold text-white mb-3">
-              Need Live GPS Speed Tracking?
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Frequently Asked Questions (FAQ)
             </h2>
-            <p className="mb-4">
-              If you want to measure your actual current speed in real time using satellite signals while
-              traveling in a car, train, or bike, try our dedicated utility:
-            </p>
+            <div className="space-y-4">
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
+                  Why do some countries use mph while others use km/h?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  The majority of the world uses the International System of Units (SI metric system), measuring road speed in kilometers per hour (km/h). A few nations, primarily the United States, the United Kingdom, and several Caribbean nations, continue to use the Imperial / US Customary system measuring distance in miles and speed in miles per hour (mph).
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
+                  How can I quickly estimate km/h to mph in my head?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  A quick mental rule of thumb is multiplying the km/h value by 0.6. For example, 100 km/h × 0.6 = 60 mph (actual is 62.14 mph). Another popular shortcut uses the Fibonacci sequence (3, 5, 8, 13, 21, 34, 55, 89) as an approximation: 50 km/h is approximately 31 mph (actual is 31.07 mph), and 80 km/h is approximately 50 mph (actual is 49.71 mph).
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
+                  What is a knot and where is it used?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  A knot (kn) equals one nautical mile per hour (exactly 1.852 km/h or approximately 1.151 mph). It is the global standard unit in aviation, marine navigation, and meteorology. While one nautical mile is defined as exactly 1,852 metres, its historical relationship to one minute of latitude is approximate because Earth&apos;s latitude geometry varies (Earth is an oblate spheroid, not a perfect sphere).
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
+                  Is Mach speed a constant number?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  Mach 1 represents the local speed of sound, which in reality varies depending on air temperature and pressure. For standard conversion purposes, this calculator uses a fixed reference speed of sound at sea level in dry air at 20°C (Mach 1 = 1,234.8 km/h, 343 m/s, or approximately 767.3 mph). The calculator does not dynamically adjust Mach conversion for changing altitude or temperature.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Contextual Link to GPS Speedometer */}
+          <section className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">
+                Need to measure your live speed right now?
+              </h3>
+              <p className="text-xs text-gray-400">
+                Check our companion web utility: a real-time GPS Speedometer that tracks vehicle velocity using device GPS/location services.
+              </p>
+            </div>
             <a
               href="https://speedometer.toolhub.org.in/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-medium px-5 py-3 rounded-xl border border-gray-700 transition-colors text-sm"
+              className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap"
             >
-              🚀 Open Online GPS Speedometer →
+              🚀 Open GPS Speedometer →
             </a>
           </section>
         </div>

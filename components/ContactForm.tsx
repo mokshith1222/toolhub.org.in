@@ -67,10 +67,9 @@ export default function ContactForm() {
   return (
     <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-8 shadow-xl">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-white mb-2">Send a Message</h2>
+        <h2 className="text-xl font-bold text-white mb-2">Prepare a Message</h2>
         <p className="text-xs text-gray-400 leading-relaxed">
-          Fill out the form below. For privacy and data minimization, messages are transmitted
-          directly via your preferred email service rather than stored on an intermediary database.
+          Fill out the fields below to prepare your message. This form does not submit data to a ToolHub server or database. Clicking &quot;Open in Email Client&quot; creates a pre-filled draft in your device&apos;s email program, where you can review and send the email yourself.
         </p>
       </div>
 
@@ -173,8 +172,7 @@ export default function ContactForm() {
 
         {prepared && (
           <div className="p-3 bg-blue-950/40 border border-blue-800/60 rounded-xl text-xs text-blue-300 mt-2">
-            Your email client has been triggered. If your system did not automatically open your mail app,
-            use the <strong>Copy Formatted Text</strong> button above and send directly to{" "}
+            Your email client has been triggered with your pre-filled message. Please review and click send in your email application. If your mail client did not open automatically, click <strong>Copy Formatted Text</strong> above and send directly to{" "}
             <a href="mailto:mokshithnaik67@gmail.com" className="underline font-semibold">
               mokshithnaik67@gmail.com
             </a>
