@@ -43,6 +43,15 @@ const workingTools = [
     external: false,
   },
   {
+    name: "Fuel Cost & Mileage Calculator",
+    description:
+      "Estimate trip fuel expenses, total fuel needed, and cost per kilometre in ₹ for Petrol, Diesel, CNG, and EVs with passenger cost-splitting.",
+    href: "/tools/fuel-cost-calculator",
+    icon: "⛽",
+    tags: ["Calculator", "Travel Cost", "Mileage", "Petrol / Diesel"],
+    external: false,
+  },
+  {
     name: "Free Online GPS Speedometer",
     description:
       "Measure your real-time travel speed in km/h or mph directly using device GPS and location services in your mobile browser. Displays current speed and travel metrics.",
@@ -55,11 +64,11 @@ const workingTools = [
 
 const plannedTools = [
   {
-    name: "Fuel Cost & Mileage Calculator",
+    name: "Indian Land Area Converter",
     description:
-      "Calculate total fuel consumption, trip expenses, and mileage in Indian Rupees (INR) based on distance, vehicle fuel efficiency, and local petrol/diesel prices.",
-    icon: "⛽",
-    tags: ["Automotive", "Expense", "Trip Planning"],
+      "Convert Indian regional land measurements including Guntha, Cent, Bigha, Ground, Ankanam, Acres, and Square Feet.",
+    icon: "📐",
+    tags: ["Land Measurement", "Regional Units", "Converter"],
   },
   {
     name: "Internet Speed Test",
