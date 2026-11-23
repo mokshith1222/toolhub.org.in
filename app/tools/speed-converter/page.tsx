@@ -3,9 +3,9 @@ import Link from "next/link";
 import SpeedConverter from "@/components/SpeedConverter";
 
 export const metadata: Metadata = {
-  title: "Speed Unit Converter – km/h, mph, m/s, Knots, ft/s, Mach",
+  title: "Speed Unit Converter – km/h to mph, m/s, Knots & Mach",
   description:
-    "Convert between kilometers per hour (km/h), miles per hour (mph), meters per second (m/s), knots, feet per second (ft/s), and Mach. Instant formulas, examples, and FAQs.",
+    "Free speed converter: convert km/h to mph, mph to km/h, km/h to m/s, and knots in real time. Features formulas, conversion tables, worked examples, and FAQs.",
   alternates: { canonical: "https://toolhub.org.in/tools/speed-converter" },
   openGraph: {
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       "Convert speed values between km/h, mph, m/s, knots, and ft/s instantly in your browser. Complete conversion formulas and reference tables.",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Speed Unit Converter – km/h, mph, m/s, Knots | ToolHub",
     description:
       "Convert speed values between km/h, mph, m/s, knots, and ft/s instantly in your browser. Complete conversion formulas and reference tables.",
@@ -44,6 +44,22 @@ const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
+    {
+      "@type": "Question",
+      name: "How do you convert kmph (km/h) to mph?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "To convert kmph (kilometers per hour) to mph (miles per hour), divide the speed by 1.609344 (or multiply by 0.621371). For instance, 100 km/h divided by 1.609344 equals 62.14 mph.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is 100 km/h in mph?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "100 km/h is equal to exactly 62.1371 miles per hour (commonly rounded to 62.14 mph). In terms of SI velocity, 100 km/h also equals 27.78 meters per second (m/s) and 53.99 knots.",
+      },
+    },
     {
       "@type": "Question",
       name: "Why do some countries use mph while others use km/h?",
@@ -246,6 +262,19 @@ export default function SpeedConverterPage() {
 
               <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
                 <div className="flex items-baseline justify-between mb-2">
+                  <h3 className="font-semibold text-white">Converting m/s to km/h</h3>
+                  <span className="font-mono text-xs text-blue-400">Formula: km/h = m/s × 3.6</span>
+                </div>
+                <p className="text-sm text-gray-400 mb-2">
+                  <strong>Worked Example:</strong> Convert 15 m/s wind speed into road driving speed (km/h).
+                </p>
+                <div className="bg-gray-950 p-3 rounded-lg font-mono text-xs text-gray-300">
+                  km/h = 15 × 3.6 = <strong>54.00 km/h</strong>
+                </div>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <div className="flex items-baseline justify-between mb-2">
                   <h3 className="font-semibold text-white">Converting Knots to km/h</h3>
                   <span className="font-mono text-xs text-blue-400">Formula: km/h = kn × 1.852</span>
                 </div>
@@ -378,6 +407,24 @@ export default function SpeedConverterPage() {
             <div className="space-y-4">
               <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
                 <h3 className="font-semibold text-white mb-2 text-base">
+                  How do you convert kmph (km/h) to mph?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  To convert kmph (kilometers per hour) to mph (miles per hour), divide the speed by 1.609344 (or multiply by 0.621371). For instance, 100 km/h divided by 1.609344 equals 62.14 mph.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
+                  What is 100 km/h in mph?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  100 km/h is equal to exactly 62.1371 miles per hour (commonly rounded to 62.14 mph). In terms of SI velocity, 100 km/h also equals 27.78 meters per second (m/s) and 53.99 knots.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
                   Why do some countries use mph while others use km/h?
                 </h3>
                 <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
@@ -414,24 +461,49 @@ export default function SpeedConverterPage() {
             </div>
           </section>
 
-          {/* Contextual Link to GPS Speedometer */}
-          <section className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">
-                Need to measure your live speed right now?
-              </h3>
-              <p className="text-xs text-gray-400">
-                Check our companion web utility: a real-time GPS Speedometer that tracks vehicle velocity using device GPS/location services.
-              </p>
+          {/* Contextual Links to Other Travel Calculators */}
+          <section className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-white mb-2">Explore Related Travel & Calculation Tools</h3>
+            <p className="text-xs text-gray-400 mb-4">
+              Need to compute trip duration, journey distance, or fuel expenditure for your route?
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <Link
+                href="/tools/speed-distance-time"
+                className="bg-gray-950 border border-gray-800 hover:border-blue-500/50 p-3.5 rounded-xl transition-all group"
+              >
+                <div className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  ⏱️ Speed Distance Time
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  Solve for speed, journey distance, or travel time with automatic conversions.
+                </div>
+              </Link>
+              <Link
+                href="/tools/fuel-cost-calculator"
+                className="bg-gray-950 border border-gray-800 hover:border-blue-500/50 p-3.5 rounded-xl transition-all group"
+              >
+                <div className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  ⛽ Fuel Cost Calculator
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  Calculate fuel expenses, mileage, and cost per km for Petrol, Diesel, CNG & EVs.
+                </div>
+              </Link>
+              <a
+                href="https://speedometer.toolhub.org.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-950 border border-gray-800 hover:border-blue-500/50 p-3.5 rounded-xl transition-all group"
+              >
+                <div className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  🚀 GPS Speedometer ↗
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  Track live travel velocity using device GPS in your mobile browser.
+                </div>
+              </a>
             </div>
-            <a
-              href="https://speedometer.toolhub.org.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap"
-            >
-              🚀 Open GPS Speedometer →
-            </a>
           </section>
         </div>
       </div>

@@ -3,9 +3,9 @@ import Link from "next/link";
 import SpeedDistanceTimeCalculator from "@/components/SpeedDistanceTimeCalculator";
 
 export const metadata: Metadata = {
-  title: "Speed Distance Time Calculator – Online Travel Math Tool",
+  title: "Speed Distance Time Calculator – Calculate Speed, Time & Distance",
   description:
-    "Calculate speed, travel distance, or trip duration with instant unit conversions (km, miles, hours, minutes). Step-by-step formula breakdown, examples, and FAQs.",
+    "Free speed distance time calculator: find speed from distance and time, calculate distance using speed and time, or solve journey duration. Step-by-step formulas & FAQs.",
   alternates: { canonical: "https://toolhub.org.in/tools/speed-distance-time" },
   openGraph: {
     type: "website",
@@ -44,6 +44,22 @@ const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
+    {
+      "@type": "Question",
+      name: "How do I find speed from distance and time?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "To find speed from distance and time, use the formula Speed = Distance ÷ Time. First, ensure your time is in hours (e.g. 1 hour and 30 minutes = 1.5 hours). Then divide the total distance by total time to get your speed in km/h or mph.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I calculate distance using speed and time?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "To calculate distance, multiply your average speed by the elapsed time: Distance = Speed × Time. For example, if you maintain 80 km/h for 2.5 hours, you cover 80 × 2.5 = 200 kilometers.",
+      },
+    },
     {
       "@type": "Question",
       name: "Why is my real driving time usually longer than the calculated time?",
@@ -302,6 +318,24 @@ export default function SpeedDistanceTimePage() {
             <div className="space-y-4">
               <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
                 <h3 className="font-semibold text-white mb-2 text-base">
+                  How do I find speed from distance and time?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  To find speed from distance and time, use the formula Speed = Distance ÷ Time. First, ensure your time is in hours (e.g. 1 hour and 30 minutes = 1.5 hours). Then divide the total distance by total time to get your speed in km/h or mph.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
+                  How do I calculate distance using speed and time?
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                  To calculate distance, multiply your average speed by the elapsed time: Distance = Speed × Time. For example, if you maintain 80 km/h for 2.5 hours, you cover 80 × 2.5 = 200 kilometers.
+                </p>
+              </div>
+
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                <h3 className="font-semibold text-white mb-2 text-base">
                   Why is my real driving time usually longer than the calculated time?
                 </h3>
                 <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
@@ -335,6 +369,51 @@ export default function SpeedDistanceTimePage() {
                   This tool calculates your average speed (in km/h and mph) based on your travel distance and elapsed time. However, it does not calculate running pace expressed in minutes per kilometer (min/km) or minutes per mile (min/mi).
                 </p>
               </div>
+            </div>
+          </section>
+
+          {/* Related Travel & Conversion Tools */}
+          <section className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-white mb-2">Explore Related Travel & Calculation Tools</h3>
+            <p className="text-xs text-gray-400 mb-4">
+              Calculate speed conversions, fuel budgets, or track live travel speed across your journey.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <Link
+                href="/tools/speed-converter"
+                className="bg-gray-950 border border-gray-800 hover:border-blue-500/50 p-3.5 rounded-xl transition-all group"
+              >
+                <div className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  🔁 Speed Unit Converter
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  Convert speed between km/h, mph, m/s, knots, and Mach in real time.
+                </div>
+              </Link>
+              <Link
+                href="/tools/fuel-cost-calculator"
+                className="bg-gray-950 border border-gray-800 hover:border-blue-500/50 p-3.5 rounded-xl transition-all group"
+              >
+                <div className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  ⛽ Fuel Cost Calculator
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  Estimate total fuel required, journey expenditure, and cost per km.
+                </div>
+              </Link>
+              <a
+                href="https://speedometer.toolhub.org.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-950 border border-gray-800 hover:border-blue-500/50 p-3.5 rounded-xl transition-all group"
+              >
+                <div className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  🚀 GPS Speedometer ↗
+                </div>
+                <div className="text-xs text-gray-400 mt-1">
+                  Track live travel velocity using device GPS in your mobile browser.
+                </div>
+              </a>
             </div>
           </section>
         </div>

@@ -46,6 +46,22 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
+      name: "How much petrol is needed for a 100 km trip?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The amount of petrol needed for 100 km depends directly on your vehicle's mileage. For a commuter motorcycle giving 50 km/L, you need 2.0 litres (approx. ₹204 at ₹102/L). For an average petrol car achieving 15 km/L, you need approximately 6.67 litres (approx. ₹680). For a larger car delivering 12 km/L, you need 8.33 litres (approx. ₹850).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are the fuel prices in this calculator live rates?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. The pre-filled fuel prices (e.g. ₹102 for Petrol, ₹88 for Diesel) are illustrative defaults based on typical Indian urban rates. Fuel prices fluctuate daily across states, cities, and fuel pump operators. You can type your exact local pump rate directly into the 'Fuel Price' field for an accurate calculation.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "How do you calculate trip fuel cost?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -124,10 +140,14 @@ export default function FuelCostCalculatorPage() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
             Fuel Cost & Mileage Calculator
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-3xl">
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-3xl mb-3">
             Estimate trip fuel expenses, total fuel needed, and cost per kilometre across India.
             Supports <strong>Petrol, Diesel, CNG, and Electric Vehicles (EVs)</strong> with passenger cost-splitting.
           </p>
+          <div className="inline-flex items-center gap-2 text-xs text-yellow-300/90 bg-yellow-950/40 border border-yellow-800/50 px-3 py-1.5 rounded-lg">
+            <span>ℹ️</span>
+            <span><strong>Note on Fuel Prices:</strong> Default fuel prices are illustrative. Enter your current local pump rates for precise estimates.</span>
+          </div>
         </div>
 
         {/* Interactive Calculator Component */}
@@ -262,6 +282,24 @@ export default function FuelCostCalculatorPage() {
           <div className="space-y-6">
             <div>
               <h3 className="text-base font-semibold text-white mb-1">
+                How much petrol is needed for a 100 km trip?
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                The amount of petrol needed for 100 km depends directly on your vehicle&apos;s mileage. For a commuter motorcycle giving 50 km/L, you need 2.0 litres (approx. ₹204 at ₹102/L). For an average petrol car achieving 15 km/L, you need approximately 6.67 litres (approx. ₹680). For a larger car delivering 12 km/L, you need 8.33 litres (approx. ₹850). Read our in-depth breakdown: <Link href="/guides/petrol-cost-for-100-km" className="text-blue-400 hover:underline">How Much Petrol Will a 100 km Trip Cost?</Link>.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-base font-semibold text-white mb-1">
+                Are the fuel prices in this calculator live rates?
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                No. The pre-filled fuel prices (e.g. ₹102 for Petrol, ₹88 for Diesel) are illustrative defaults based on typical Indian urban rates. Fuel prices fluctuate daily across states, cities, and fuel pump operators. You can type your exact local pump rate directly into the &quot;Fuel Price&quot; field for an accurate calculation.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-base font-semibold text-white mb-1">
                 How do you calculate trip fuel cost?
               </h3>
               <p className="text-sm text-gray-400 leading-relaxed">
@@ -307,16 +345,16 @@ export default function FuelCostCalculatorPage() {
           </div>
         </div>
 
-        {/* Related Tools Navigation */}
+        {/* Related Tools & Guides Navigation */}
         <div className="mt-8 bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8">
-          <h2 className="text-xl font-bold text-white mb-4">Related Travel Tools</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <h2 className="text-xl font-bold text-white mb-4">Related Travel Tools &amp; Guides</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Link
               href="/tools/speed-distance-time"
               className="p-4 rounded-xl bg-gray-950 border border-gray-800 hover:border-blue-500/50 transition-all group"
             >
               <h3 className="text-white font-semibold group-hover:text-blue-400 transition-colors">
-                ⏱️ Speed, Distance & Time Calculator
+                ⏱️ Speed, Distance &amp; Time
               </h3>
               <p className="text-xs text-gray-400 mt-1">
                 Calculate journey duration, travel speed, or distance before estimating fuel budgets.
@@ -331,6 +369,17 @@ export default function FuelCostCalculatorPage() {
               </h3>
               <p className="text-xs text-gray-400 mt-1">
                 Convert speed values across km/h, mph, knots, and m/s with mathematical precision.
+              </p>
+            </Link>
+            <Link
+              href="/guides/petrol-cost-for-100-km"
+              className="p-4 rounded-xl bg-gray-950 border border-gray-800 hover:border-blue-500/50 transition-all group"
+            >
+              <h3 className="text-white font-semibold group-hover:text-blue-400 transition-colors">
+                📖 100 km Petrol Guide
+              </h3>
+              <p className="text-xs text-gray-400 mt-1">
+                Read our worked formula, vehicle mileage benchmarks, and running cost examples.
               </p>
             </Link>
           </div>
