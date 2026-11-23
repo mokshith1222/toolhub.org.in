@@ -62,10 +62,15 @@ const isSafeValue = (v: number): boolean => {
 export default function FuelCostCalculator() {
   const [fuelType, setFuelType] = useState<FuelType>("petrol");
   const [distance, setDistance] = useState<string>("100");
+  const [isRoundTrip, setIsRoundTrip] = useState<boolean>(false);
   const [efficiency, setEfficiency] = useState<string>(FUEL_CONFIGS.petrol.defaultEfficiency);
   const [price, setPrice] = useState<string>(FUEL_CONFIGS.petrol.defaultPrice);
   const [passengers, setPassengers] = useState<string>("1");
   const [copied, setCopied] = useState<boolean>(false);
+
+  // Commute projection state (independent of main trip round-trip)
+  const [commuteDays, setCommuteDays] = useState<string>("22");
+  const [commuteIncludeReturn, setCommuteIncludeReturn] = useState<boolean>(true);
 
   const activeConfig = FUEL_CONFIGS[fuelType];
 
@@ -78,9 +83,12 @@ export default function FuelCostCalculator() {
   const handleReset = () => {
     setFuelType("petrol");
     setDistance("100");
+    setIsRoundTrip(false);
     setEfficiency(FUEL_CONFIGS.petrol.defaultEfficiency);
     setPrice(FUEL_CONFIGS.petrol.defaultPrice);
     setPassengers("1");
+    setCommuteDays("22");
+    setCommuteIncludeReturn(true);
     setCopied(false);
   };
 
@@ -139,29 +147,73 @@ export default function FuelCostCalculator() {
     return { isValid: true, num, error: "" };
   };
 
+  const validateCommuteDays = (val: string) => {
+    const trimmed = val.trim();
+    if (trimmed === "") {
+      return { isValid: false, num: 22, error: "Please enter working days (1 to 31)." };
+    }
+    const isValidFormat = /^\d+$/.test(trimmed);
+    if (!isValidFormat) {
+      return { isValid: false, num: 22, error: "Days must be a whole number between 1 and 31." };
+    }
+    const num = Number(trimmed);
+    if (num < 1 || num > 31) {
+      return { isValid: false, num: 22, error: "Days must be between 1 and 31." };
+    }
+    return { isValid: true, num, error: "" };
+  };
+
   const distCheck = validateDecimal(distance, "Distance", true);
   const effCheck = validateDecimal(efficiency, "Mileage / Efficiency", false);
   const priceCheck = validateDecimal(price, "Fuel price", true);
   const passCheck = validatePassengers(passengers);
+  const commuteDaysCheck = validateCommuteDays(commuteDays);
 
-  const isValid = distCheck.isValid && effCheck.isValid && priceCheck.isValid && passCheck.isValid;
+  const isTripValid = distCheck.isValid && effCheck.isValid && priceCheck.isValid && passCheck.isValid;
 
+  // Single Trip Calculations
+  let effectiveDistance = 0;
   let totalFuel = 0;
   let totalCost = 0;
   let costPerKm = 0;
   let costPerPassenger = 0;
 
-  if (isValid) {
-    const distNum = distCheck.num;
+  if (isTripValid) {
+    const enteredDist = distCheck.num;
+    effectiveDistance = isRoundTrip ? enteredDist * 2 : enteredDist;
     const effNum = effCheck.num;
     const priceNum = priceCheck.num;
     const passNum = passCheck.num;
 
     if (effNum > 0) {
-      totalFuel = distNum / effNum;
+      totalFuel = effectiveDistance / effNum;
       totalCost = totalFuel * priceNum;
-      costPerKm = distNum > 0 ? totalCost / distNum : 0;
+      // Cost per km is price / mileage, or totalCost / effectiveDistance when > 0
+      costPerKm = effectiveDistance > 0 ? totalCost / effectiveDistance : (priceNum / effNum);
       costPerPassenger = passNum > 0 ? totalCost / passNum : totalCost;
+    }
+  }
+
+  // Commute Projections Calculations
+  // Uses entered one-way distance * (commuteIncludeReturn ? 2 : 1)
+  const isCommuteValid = isTripValid && commuteDaysCheck.isValid;
+  let dailyCommuteDistance = 0;
+  let dailyCommuteCost = 0;
+  let monthlyCommuteCost = 0;
+  let yearlyCommuteCost = 0;
+
+  if (isCommuteValid) {
+    const enteredDist = distCheck.num;
+    dailyCommuteDistance = commuteIncludeReturn ? enteredDist * 2 : enteredDist;
+    const effNum = effCheck.num;
+    const priceNum = priceCheck.num;
+    const daysNum = commuteDaysCheck.num;
+
+    if (effNum > 0) {
+      const dailyFuel = dailyCommuteDistance / effNum;
+      dailyCommuteCost = dailyFuel * priceNum;
+      monthlyCommuteCost = dailyCommuteCost * daysNum;
+      yearlyCommuteCost = monthlyCommuteCost * 12;
     }
   }
 
@@ -182,15 +234,24 @@ export default function FuelCostCalculator() {
   };
 
   const handleCopySummary = async () => {
-    if (!isValid) return;
+    if (!isTripValid) return;
+    const tripTypeLabel = isRoundTrip ? "Round Trip (2-Way)" : "One-Way Trip";
     const text = `Trip Fuel Summary (${activeConfig.label}):
-• Distance: ${distance} km
+• Entered Distance: ${distance} km (${tripTypeLabel})
+• Effective Total Distance: ${formatUnits(effectiveDistance)} km
 • Mileage: ${efficiency} ${activeConfig.efficiencyUnit}
 • Price: ₹${price} / ${activeConfig.unit.split(" ")[0]}
 • Total Fuel: ${formatUnits(totalFuel)} ${activeConfig.unit}
 • Total Cost: ₹${formatCurrency(totalCost)}
-• Cost / km: ₹${formatCurrency(costPerKm)} / km
-${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurrency(costPerPassenger)}\n` : ""}Calculated via ToolHub (https://toolhub.org.in/tools/fuel-cost-calculator)`;
+• Running Cost / km: ₹${formatCurrency(costPerKm)} / km
+${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurrency(costPerPassenger)}\n` : ""}${
+      isCommuteValid
+        ? `\nCommute Expense Projection:
+• Daily Commute (${commuteIncludeReturn ? "Round-Trip 2x" : "One-Way"}): ${formatUnits(dailyCommuteDistance)} km = ₹${formatCurrency(dailyCommuteCost)}
+• Monthly (${commuteDaysCheck.num} days): ₹${formatCurrency(monthlyCommuteCost)}
+• Yearly (12 months): ₹${formatCurrency(yearlyCommuteCost)}\n`
+        : ""
+    }Calculated via ToolHub (https://toolhub.org.in/tools/fuel-cost-calculator)`;
 
     try {
       await navigator.clipboard.writeText(text);
@@ -231,7 +292,7 @@ ${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurr
 
       {/* Input Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        {/* Distance Input */}
+        {/* Distance Input & Round Trip Toggle */}
         <div>
           <label htmlFor="fuel-distance" className="block text-sm font-medium text-gray-300 mb-1.5">
             Trip Distance
@@ -243,7 +304,7 @@ ${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurr
               inputMode="decimal"
               value={distance}
               onChange={(e) => setDistance(e.target.value)}
-              placeholder="e.g. 250"
+              placeholder="e.g. 100"
               className={`w-full bg-gray-950 border text-white rounded-xl px-4 py-2.5 font-mono focus:outline-none transition-colors ${
                 distCheck.error ? "border-red-500 focus:border-red-500" : "border-gray-700 focus:border-blue-500"
               }`}
@@ -251,6 +312,25 @@ ${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurr
             <span className="absolute right-3 top-2.5 text-xs text-gray-400">km</span>
           </div>
           {distCheck.error && <p className="text-red-400 text-xs mt-1">{distCheck.error}</p>}
+
+          {/* Round-Trip Checkbox */}
+          <div className="mt-2.5 flex items-center justify-between flex-wrap gap-2">
+            <label className="flex items-center gap-2 cursor-pointer text-xs text-gray-300 hover:text-white select-none">
+              <input
+                id="fuel-round-trip"
+                type="checkbox"
+                checked={isRoundTrip}
+                onChange={(e) => setIsRoundTrip(e.target.checked)}
+                className="w-4 h-4 rounded border-gray-700 bg-gray-950 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900 cursor-pointer"
+              />
+              <span>Round Trip (Return Journey)</span>
+            </label>
+            {isTripValid && isRoundTrip && (
+              <span className="text-xs font-mono font-medium text-blue-400 bg-blue-950/60 border border-blue-800/50 px-2 py-0.5 rounded">
+                Effective: {formatUnits(effectiveDistance)} km ({formatUnits(distCheck.num)} × 2)
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Mileage / Efficiency Input */}
@@ -320,25 +400,34 @@ ${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurr
         </div>
       </div>
 
-      {/* Results Display Box */}
+      {/* Main Single Trip Result Display Box */}
       <div className="bg-gray-950 border border-gray-800 rounded-xl p-5 mb-6">
-        <div className="text-xs uppercase tracking-wider text-gray-400 mb-1">Estimated Total Fuel Cost</div>
+        <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
+          <span className="text-xs uppercase tracking-wider text-gray-400">
+            Estimated Trip Fuel Cost {isRoundTrip && <span className="text-blue-400 font-semibold">(Round Trip)</span>}
+          </span>
+          {isTripValid && (
+            <span className="text-xs text-gray-500">
+              Distance: <strong className="text-gray-300">{formatUnits(effectiveDistance)} km</strong>
+            </span>
+          )}
+        </div>
         <div className="text-3xl sm:text-4xl font-extrabold text-blue-400 font-mono mb-4">
-          {isValid ? `₹${formatCurrency(totalCost)}` : "—"}
+          {isTripValid ? `₹${formatCurrency(totalCost)}` : "—"}
         </div>
 
-        {/* Breakdown Grid */}
+        {/* Trip Breakdown Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-gray-800/80">
           <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
             <span className="block text-xs text-gray-400">{activeConfig.consumptionLabel}</span>
             <span className="text-base font-semibold text-white font-mono">
-              {isValid ? `${formatUnits(totalFuel)} ${activeConfig.unit}` : "—"}
+              {isTripValid ? `${formatUnits(totalFuel)} ${activeConfig.unit}` : "—"}
             </span>
           </div>
           <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
             <span className="block text-xs text-gray-400">Running Cost / km</span>
             <span className="text-base font-semibold text-green-400 font-mono">
-              {isValid ? `₹${formatCurrency(costPerKm)} / km` : "—"}
+              {isTripValid ? `₹${formatCurrency(costPerKm)} / km` : "—"}
             </span>
           </div>
           <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
@@ -346,7 +435,119 @@ ${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurr
               {passCheck.num > 1 ? `Cost per Person (${passCheck.num})` : "Cost per Person"}
             </span>
             <span className="text-base font-semibold text-yellow-400 font-mono">
-              {isValid ? `₹${formatCurrency(costPerPassenger)}` : "—"}
+              {isTripValid ? `₹${formatCurrency(costPerPassenger)}` : "—"}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Commute Expense Projection Section */}
+      <div className="bg-gray-950/70 border border-gray-800 rounded-xl p-5 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div>
+            <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+              <span>📅</span> Regular Commute Expense Projection
+            </h3>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Estimate recurring fuel expenses based on your daily one-way distance ({distCheck.isValid ? `${distCheck.num} km` : "entered distance"}).
+            </p>
+          </div>
+        </div>
+
+        {/* Commute Controls & Assumptions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 pb-4 border-t border-gray-800/80 text-xs">
+          {/* Include Return Journey Toggle */}
+          <div>
+            <label className="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white select-none">
+              <input
+                id="commute-return-journey"
+                type="checkbox"
+                checked={commuteIncludeReturn}
+                onChange={(e) => setCommuteIncludeReturn(e.target.checked)}
+                className="w-4 h-4 rounded border-gray-700 bg-gray-950 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900 cursor-pointer"
+              />
+              <span className="font-medium">Include return journey in daily commute (2-way)</span>
+            </label>
+            <p className="text-gray-500 mt-1 pl-6">
+              Daily distance: <strong className="text-gray-300">{isTripValid ? `${formatUnits(dailyCommuteDistance)} km` : "—"}</strong>{" "}
+              {commuteIncludeReturn ? `(${distCheck.num} km × 2)` : "(one-way only)"}
+            </p>
+          </div>
+
+          {/* Commute Days Selector & Presets */}
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <label htmlFor="commute-days" className="font-medium text-gray-300">
+                Working Days / Month:
+              </label>
+              <div className="flex items-center gap-1">
+                {["20", "22", "26"].map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => setCommuteDays(preset)}
+                    className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+                      commuteDays === preset
+                        ? "bg-blue-600 text-white font-bold"
+                        : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
+                    }`}
+                  >
+                    {preset}d
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <input
+                id="commute-days"
+                type="text"
+                inputMode="numeric"
+                value={commuteDays}
+                onChange={(e) => setCommuteDays(e.target.value)}
+                placeholder="22"
+                className={`w-full bg-gray-950 border text-white rounded-lg px-3 py-1.5 font-mono text-xs focus:outline-none transition-colors ${
+                  commuteDaysCheck.error ? "border-red-500 focus:border-red-500" : "border-gray-700 focus:border-blue-500"
+                }`}
+              />
+              <span className="absolute right-3 top-1.5 text-gray-500">days/month</span>
+            </div>
+            {commuteDaysCheck.error && (
+              <p className="text-red-400 text-[11px] mt-1">{commuteDaysCheck.error}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Commute Projections Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div className="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
+            <span className="block text-xs text-gray-400">Daily Commute</span>
+            <span className="text-base font-bold text-white font-mono">
+              {isCommuteValid ? `₹${formatCurrency(dailyCommuteCost)}` : "—"}
+            </span>
+            <span className="block text-[11px] text-gray-500 mt-0.5">
+              {isCommuteValid ? `${formatUnits(dailyCommuteDistance)} km / day` : "—"}
+            </span>
+          </div>
+
+          <div className="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
+            <span className="block text-xs text-gray-400">
+              Monthly Cost ({commuteDaysCheck.isValid ? `${commuteDaysCheck.num} days` : "—"})
+            </span>
+            <span className="text-base font-bold text-blue-400 font-mono">
+              {isCommuteValid ? `₹${formatCurrency(monthlyCommuteCost)}` : "—"}
+            </span>
+            <span className="block text-[11px] text-gray-500 mt-0.5">
+              {isCommuteValid ? `${formatUnits(dailyCommuteDistance * commuteDaysCheck.num)} km / mo` : "—"}
+            </span>
+          </div>
+
+          <div className="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
+            <span className="block text-xs text-gray-400">Yearly Projection (12 mo)</span>
+            <span className="text-base font-bold text-green-400 font-mono">
+              {isCommuteValid ? `₹${formatCurrency(yearlyCommuteCost)}` : "—"}
+            </span>
+            <span className="block text-[11px] text-gray-500 mt-0.5">
+              {isCommuteValid ? `${formatUnits(dailyCommuteDistance * commuteDaysCheck.num * 12)} km / yr` : "—"}
             </span>
           </div>
         </div>
@@ -358,9 +559,9 @@ ${passCheck.num > 1 ? `• Per Person (${passCheck.num} people): ₹${formatCurr
           <button
             type="button"
             onClick={handleCopySummary}
-            disabled={!isValid}
+            disabled={!isTripValid}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors inline-flex items-center gap-1.5 ${
-              isValid
+              isTripValid
                 ? "bg-gray-800 hover:bg-gray-700 text-white"
                 : "bg-gray-800/40 text-gray-500 cursor-not-allowed"
             }`}

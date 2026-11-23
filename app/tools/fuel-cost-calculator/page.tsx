@@ -46,6 +46,14 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
+      name: "How do I calculate monthly commute petrol expenses?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "To calculate monthly commute fuel costs: first determine your daily round-trip commute distance (e.g., 20 km one-way = 40 km daily). Divide by your vehicle's mileage to get daily fuel needed, multiply by the fuel price to get daily cost, and finally multiply by the number of working days in the month (typically 20, 22, or 26 days).",
+      },
+    },
+    {
+      "@type": "Question",
       name: "How much petrol is needed for a 100 km trip?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -190,10 +198,12 @@ export default function FuelCostCalculatorPage() {
             </div>
           </div>
 
+          <div className="bg-gray-950 border border-gray-800/80 rounded-xl p-4 text-xs text-gray-400 leading-relaxed mb-4">
+            <strong className="text-gray-300">Round Trip Distance:</strong> Checking &quot;Round Trip&quot; doubles the entered distance once (<code className="text-blue-400">Entered km × 2</code>) to compute full return journey expenses without altering cost-per-kilometre.
+          </div>
+
           <div className="bg-gray-950 border border-gray-800/80 rounded-xl p-4 text-xs text-gray-400 leading-relaxed">
-            <strong className="text-gray-300">Passenger Cost Split:</strong> If multiple passengers travel together,
-            the total fuel bill is divided by the passenger count: <code className="text-blue-400">Total Cost ÷ People</code>.
-            This gives a transparent split for shared road trips and carpooling.
+            <strong className="text-gray-300">Commute Projections:</strong> Estimates recurring expenses based on your daily commute distance (with an independent option to include your return trip) multiplied by your selected working days per month (20, 22, 26, or custom 1–31 days).
           </div>
         </div>
 
@@ -280,6 +290,15 @@ export default function FuelCostCalculatorPage() {
             Frequently Asked Questions
           </h2>
           <div className="space-y-6">
+            <div>
+              <h3 className="text-base font-semibold text-white mb-1">
+                How do I calculate monthly commute petrol expenses?
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                To calculate monthly commute fuel costs: first determine your daily round-trip commute distance (e.g., 20 km one-way = 40 km daily). Divide by your vehicle&apos;s mileage to get daily fuel needed, multiply by the fuel price to get daily cost, and finally multiply by the number of working days in the month (typically 20, 22, or 26 days). Our calculator computes daily, monthly, and yearly projections automatically.
+              </p>
+            </div>
+
             <div>
               <h3 className="text-base font-semibold text-white mb-1">
                 How much petrol is needed for a 100 km trip?
